@@ -1,12 +1,21 @@
 {
   "name": "bm-vlogin",
-  "version": "0.1.0",
-  "private": true,
+  "version": "0.1.4",
+  "description": "基于vue的登录及手机登录(包含手机国际区号选择和记住密码功能)",
+  "private": false,
+  "files": [
+    "components",
+    "package"
+  ],
+  "style": "package/index.css",
+  "main": "components/index.js",
   "scripts": {
     "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build"
+    "build": "vue-cli-service build",
+    "lib": "vue-cli-service build --target lib --name bm-vlogin --dest package components/index.js"
   },
   "dependencies": {
+    "axios": "^0.19.0",
     "core-js": "^2.6.5",
     "vue": "^2.6.10",
     "vue-router": "^3.0.3",
@@ -15,8 +24,10 @@
   "devDependencies": {
     "@vue/cli-plugin-babel": "^3.11.0",
     "@vue/cli-service": "^3.11.0",
+    "babel-plugin-component": "^1.1.1",
     "less": "^3.0.4",
     "less-loader": "^5.0.0",
+    "mint-ui": "^2.2.13",
     "vue-template-compiler": "^2.6.10"
   },
   "postcss": {

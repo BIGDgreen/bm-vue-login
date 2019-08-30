@@ -1,0 +1,11 @@
+{
+  "plugins": [
+    [
+      "component",
+      {
+        "libraryName": "bm-vlogin",
+        "libDir": "components"
+      }
+    ]
+  ]
+}
