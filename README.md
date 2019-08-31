@@ -13,7 +13,7 @@
 ## 展示
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20190831191357808.gif)
 ## 安装
-``
+```
 npm install bm-vlogin --save
 ```
 
