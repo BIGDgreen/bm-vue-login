@@ -307,6 +307,4 @@ script
         }
     }    
 ```
-### GitHub
-开源地址： [bm_vlogin](https://github.com/BigMonkeyyy/bm-vue-login).
-欢迎star！
+
