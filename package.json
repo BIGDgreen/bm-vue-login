@@ -1,8 +1,9 @@
 {
   "name": "bm-vlogin",
-  "version": "0.1.4",
+  "version": "0.1.7",
   "description": "基于vue的登录及手机登录(包含手机国际区号选择和记住密码功能)",
   "private": false,
+  "keywords": ["vue","login","国际区号","登录","手机登录"],
   "files": [
     "components",
     "package"

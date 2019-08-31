@@ -2,8 +2,7 @@
 
 ## 介绍
 基于vue3的移动端登录组件库。<br>
-包含：普通登录页面，手机登录页面和国际区号选择页面<br>
-注意：使用该组件需要提前下载mint-ui
+包含：普通登录页面，手机登录页面和国际区号选择页面
 
 ## 特性
 <li>支持组件按需加载</li>
@@ -12,13 +11,7 @@
 <li>区号选择支持字母检索和中英文、首拼、区号搜索</li>
 
 ## 展示
-![在这里插入图片描述](https://img-blog.csdnimg.cn/20190829210300633.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQyNTMyMTI4,size_16,color_FFFFFF,t_70)
-![在这里插入图片描述](https://img-blog.csdnimg.cn/20190829210312504.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQyNTMyMTI4,size_16,color_FFFFFF,t_70)
-
-![在这里插入图片描述](https://img-blog.csdnimg.cn/20190829210325750.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQyNTMyMTI4,size_16,color_FFFFFF,t_70)
-
-
-
+![在这里插入图片描述](https://img-blog.csdnimg.cn/20190831191357808.gif)
 ## 安装
 ```
 npm install bm-vlogin --save
@@ -314,4 +307,10 @@ script
         }
     }    
 ```
+### GitHub
+开源地址： [bm_vlogin](https://github.com/BigMonkeyyy/bm-vue-login).
+欢迎star！
 
+
+### 更新日志
+0.1.7：城市区号页面按字母排序，修复字母索引会乱序的bug
