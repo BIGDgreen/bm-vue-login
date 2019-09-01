@@ -1602,6 +1602,10 @@
         mounted(){
             let that = this;
             this.countries = this.countryCode;
+            //按字典数排序
+            this.countries.sort((a,b) => {
+                return a['pinyin'].localeCompare(b['pinyin']);
+            });
             for (let i = 0; i < that.letters.length; i++){
                 that.sortedCountries[that.letters[i]] = [];
                 that.cell_show[i] = [];
@@ -1642,7 +1646,7 @@
                 for (let i = 0 ; i < this.letters.length ; i++) {
                     that.filteredCountries[that.letters[i]] = [];
                     that.countries_info[i].forEach((country_info,index) => {
-                        if (that.search_country_value.length < 1 || country_info.toLowerCase().search(that.search_country_value.toLowerCase()) !== -1) {
+                        if (country_info.toLowerCase().search(that.search_country_value.toLowerCase()) !== -1) {
                             that.filteredCountries[that.letters[i]].push(country_info);
                             that.$set(that.cell_show[i],index,true);
                             that.flag++;
@@ -1660,6 +1664,12 @@
                         that.$set(that.section_show,i,true);
                         that.flag++;
                     }
+                }
+                //当输入框为空时，显示所有数据（解决字母索引乱序问题）
+                if (that.search_country_value.length < 1) {
+                    let NewPage = '_empty' + '?time=' + new Date().getTime()/500;
+                    this.$router.push(NewPage);
+                    this.$router.go(-1);
                 }
             }
         }
