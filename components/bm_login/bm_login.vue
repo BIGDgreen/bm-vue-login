@@ -13,7 +13,7 @@
             <div class="inputItem" :class="{'focus':isFocus.password,'password_error':errorFlag.password}">
                 <img :src=icons.password_icon alt="" class="icon" @click="switchVisible">
                 <div class="inputContent">
-                    <input type="password" id="input_password" @focus="focus('password')" @blur="blur('password')" ref="password" placeholder="请输入密码" v-model="input_info.password">
+                    <input type="password" @focus="focus('password')" @blur="blur('password')" ref="password" placeholder="请输入密码" v-model="input_info.password">
                 </div>
             </div>
         </div>
@@ -30,7 +30,9 @@
         </div>
 
         <div>
-            <button :class="{'opt_button':!isLoginForbidden,'forbidden':isLoginForbidden}" @click="clickLogin()">登录</button>
+            <button :class="{'opt_button':!isLoginForbidden,'forbidden':isLoginForbidden}" @click="clickLogin()">
+                {{mConfigs.login_btn_value}}
+            </button>
         </div>
 
         <div v-if="!mConfigs.forgetPassword && mConfigs.register">
@@ -85,7 +87,7 @@
         data(){
             return{
                 visible:false,
-                checked:true,
+                checked:false,
                 input_info:{
                     username:"",
                     password:""
@@ -136,7 +138,8 @@
                     protocol:true,
                     rememberPassword:true,
                     quickLogin:true,
-                    otherLoginWays: true
+                    otherLoginWays: true,
+                    login_btn_value:'登录'
                 },this.baseConfig)
             },
             icons(){
@@ -155,6 +158,8 @@
         mounted() {
             //获取cookie值
             this.getCookie();
+            //获取用户上一次的选择
+            this.checked = sessionStorage.getItem('isChecked') === "true";
             //监听事件
             window.onresize = ()=>{
                 return(()=>{
@@ -175,8 +180,11 @@
                 if (that.checked === true){
                     //保存七天
                     that.setCookie(that.input_info.username,that.input_info.password,7);
+                    //保存用户此次选择
+                    sessionStorage.setItem('isChecked',"true");
                 } else{
                     that.clearCookie();
+                    sessionStorage.setItem('isChecked',"false");
                 }
                 //发送请求
                 this.$emit('parent_login',this.input_info);
@@ -232,6 +240,7 @@
                 } if (type === "password"){
                     this.isFocus.password = false;
                     this.icons.password_icon = this.icons.password_hidden;
+                    this.$refs.password.setAttribute("type","password");
                     //判空
                     let password_value = this.$refs.password.value;
                     this.errorFlag.password = password_value === "" || password_value === null || password_value === undefined;
@@ -248,11 +257,11 @@
                     if(!this.visible){
                         this.visible = true;
                         this.icons.password_icon = this.icons.password_visiable;
-                        document.getElementById("input_password").setAttribute("type","text");
+                        this.$refs.password.setAttribute("type","text");
                     }else {
                         this.visible = false;
                         this.icons.password_icon = this.icons.password_hidden;
-                        document.getElementById("input_password").setAttribute("type","password");
+                        this.$refs.password.setAttribute("type","password");
                     }
                 }
             }

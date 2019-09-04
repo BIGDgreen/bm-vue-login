@@ -21,7 +21,9 @@
             </div>
         </div>
         <div>
-            <button :class="{'opt_button':!isLoginForbidden,'forbidden':isLoginForbidden}" @click="login()">登录</button>
+            <button :class="{'opt_button':!isLoginForbidden,'forbidden':isLoginForbidden}" @click="login()">
+                {{mConfigs.login_btn_value}}
+            </button>
         </div>
         <button v-if="mConfigs.accountLogin" class="accountLogin" @click="$emit('accountLogin')">
             用账号密码登录
@@ -31,7 +33,6 @@
                 手机号已更换
             </div>
         </div>
-
         <div class="otherLoginWays" v-if="mConfigs.otherLoginWays" v-show="hideFooter">
             <div class="otherWayTextWrapper">
                 <div class="otherWayText">其他登录方式</div>
@@ -69,6 +70,7 @@
                 //倒计时
                 countDownTime:60,
                 timeOut:true,
+                timer:null,
                 //聚焦（切换样式）
                 isFocus:{
                     phoneNum:false,
@@ -106,7 +108,8 @@
                     changedPhone: true,
                     protocol: true,
                     otherLoginWays: true,
-                    code_length:'4'
+                    code_length:'4',
+                    login_btn_value:'登录'
                 },this.baseConfig)
             }
         },
@@ -189,12 +192,12 @@
                         message: '验证码已发送',
                         position: 'middle',
                     });
-                    let clock = window.setInterval(()=>{
+                    this.timer = setInterval(()=>{
                         that.countDownTime--;
                         that.$refs.getCode.value = this.countDownTime + "s后可重新获取";
                         that.$refs.getCode.setAttribute("disabled","disabled");
                         if(that.countDownTime <= 0){
-                            window.clearInterval(clock);
+                            clearInterval(this.timer);
                             that.countDownTime = 60;
                             that.timeOut = true;
                             that.$refs.getCode.removeAttribute("disabled");
@@ -207,10 +210,18 @@
             },
             /***************************************************登录****************************************************/
             login(){
-                this.input_info.phone = this.input_info.phone.replace(/\s*/g,"");      //去除空格
-                this.$emit('parent_phone_login',this.input_info);
+                if (!this.isLoginForbidden){
+                    //去除空格
+                    this.input_info.phone = this.input_info.phone.replace(/\s*/g,"");
+                    //用户设置函数
+                    this.$emit('parent_phone_login',this.input_info);
+                }
             }
-        }
+        },
+        beforeDestroy(){
+            clearInterval(this.timer);
+            this.timer = null;
+        },
     }
 </script>
 

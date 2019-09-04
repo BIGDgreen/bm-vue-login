@@ -1,11 +1,13 @@
 import bm_login from './bm_login/bm_login'
 import bm_phone_login from './bm_phone_login/bm_phone_login'
 import bm_select_code from './bm_select_code/bm_select_code'
+import bm_reset_password from './bm_reset_password/bm_reset_password'
 
 const components = [
     bm_login,
     bm_phone_login,
-    bm_select_code
+    bm_select_code,
+    bm_reset_password
 ];
 
 // 定义 install 方法，接收 Vue 作为参数。如果使用 use 注册插件，则所有的组件都将被注册
@@ -27,12 +29,14 @@ export {
     //组件列表
     bm_login,
     bm_phone_login,
-    bm_select_code
+    bm_select_code,
+    bm_reset_password
 }
 
 export default {
     install,
     bm_login,
     bm_phone_login,
-    bm_select_code
+    bm_select_code,
+    bm_reset_password
 }

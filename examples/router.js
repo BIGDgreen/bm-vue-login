@@ -22,9 +22,19 @@ export default new Router({
       component: () => import('./views/phone_login.vue')
     },
     {
-      path: '/phoneLogin/selectCode',
+      path: '/selectCode',
       name: 'selectCode',
       component: () => import('./views/select_code.vue')
-    }
+    },
+    {
+      path: '/phoneValidate',
+      name: 'phoneValidate',
+      component: () => import('./views/phone_validate.vue')
+    },
+    {
+      path: '/phoneValidate/resetPassword',
+      name: 'resetPassword',
+      component: () => import('./views/reset_password.vue')
+    },
   ]
 })

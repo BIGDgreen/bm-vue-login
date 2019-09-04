@@ -34,7 +34,7 @@
                 this.$router.push({path:'/phoneLogin'});
             },
             to_forgetPassword(){
-
+                this.$router.push({path:'/phoneValidate'});
             },
             to_protocol(){
 

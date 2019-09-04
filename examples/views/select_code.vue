@@ -7,12 +7,23 @@
 <script>
     export default {
         name: "select_code",
+        data(){
+          return{
+              lastRouter:""
+          }
+        },
+        beforeRouteEnter(to,from,next){
+            next(vm => {
+                vm.lastRouter = from.name;
+            })
+        },
         methods:{
             selectCountry(event){
                 let country_tel = event.tel;
-                this.$router.push({name:"phoneLogin",params:{tel:country_tel}})
+                this.$router.push({name:this.lastRouter,params:{tel:country_tel}});
             }
-        }
+        },
+
     }
 </script>
 

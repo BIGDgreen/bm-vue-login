@@ -32,14 +32,16 @@
                     accountLogin:true,
                     changedPhone: true,
                     protocol: true,
-                    otherLoginWays: true
+                    otherLoginWays: true,
+                    //登录按钮中的内容
+                    login_btn_value: '登录'
                 }
             }
         },
         methods:{
             to_chooseArea(){
                 // 跳转到区号选择页面
-                this.$router.push({path:'/phoneLogin/selectCode'});
+                this.$router.push({path:'/selectCode'});
             },
             to_account_login(){
                 // 跳转到账号密码登录页面
