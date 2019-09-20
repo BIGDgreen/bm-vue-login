@@ -240,6 +240,7 @@
     }
     .phoneLogin{
         width: 80%;
+        height: 100vh;
         margin: 33% auto;
         text-align: center;
         h2{

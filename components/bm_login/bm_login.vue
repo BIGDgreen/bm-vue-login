@@ -22,7 +22,7 @@
             <div v-if="mConfigs.rememberPassword" class="autoLogin_wrapper">
                 <input type="checkbox" id="radio" hidden v-model="checked" @click="isChecked()">
                 <label for="radio" class="autoLogin"></label>
-                <span>记住我</span>
+                <span>记住密码</span>
             </div>
             <div v-if="mConfigs.rememberPassword && mConfigs.quickLogin" class="quickLogin" @click="$emit('phoneLogin')">
                 手机快捷登录
@@ -40,7 +40,7 @@
         </div>
 
         <div v-if="!mConfigs.rememberPassword && mConfigs.quickLogin">
-            <button @click="$emit('phoneLogin')" class="phoneLogin">用短信验证码登录</button>
+            <button @click="$emit('phoneLogin')" class="phoneLogin">{{mConfigs.phone_login_text}}</button>
         </div>
 
         <div class="forgetPwd_register_protocol" v-if="mConfigs.forgetPwd_register_protocol" :class="{'footer':(mConfigs.forgetPassword||mConfigs.register||mConfigs.protocol)&&!mConfigs.otherLoginWays}" v-show="hideFooter">
@@ -73,11 +73,9 @@
                 </slot>
             </div>
         </div>
-
         <div class="protocol" v-if="mConfigs.protocol && (!mConfigs.forgetPwd_register_protocol || !mConfigs.forgetPassword)" v-show="hideFooter">
             登录注册即代表阅读并同意<span @click="$emit('toProtocol')">用户服务协议</span>
         </div>
-
     </div>
 </template>
 
@@ -139,7 +137,8 @@
                     rememberPassword:true,
                     quickLogin:true,
                     otherLoginWays: true,
-                    login_btn_value:'登录'
+                    login_btn_value:'登录',
+                    phone_login_text:'用短信验证码登录'
                 },this.baseConfig)
             },
             icons(){
@@ -156,10 +155,12 @@
         },
 
         mounted() {
-            //获取cookie值
-            this.getCookie();
-            //获取用户上一次的选择
-            this.checked = sessionStorage.getItem('isChecked') === "true";
+            if (this.mConfigs.rememberPassword) {  //如果用户选择了记住密码功能
+                //获取cookie值
+                this.getCookie();
+                //获取用户上一次的选择
+                this.checked = sessionStorage.getItem('isChecked') === "true";
+            }
             //监听事件
             window.onresize = ()=>{
                 return(()=>{
@@ -169,7 +170,7 @@
         },
         methods:{
             isChecked(){
-                this.checked = this.checked !== true;
+                this.checked = !this.checked;
                 if (document.cookie.indexOf("userName") > -1 && document.cookie.indexOf("userPwd") > -1 && !this.checked){
                     this.clearCookie();
                     this.input_info.password = "";
@@ -216,9 +217,10 @@
             },
             //清除cookie
             clearCookie: function() {
-                this.setCookie("", "", -1); //修改2值都为空，天数为负1天就好了
+                this.setCookie("", "", -1); //修改2值都为空，天数为负1天
             },
             focus(type){
+                //聚焦输入框
                 if (type === "username"){
                     this.isFocus.username = true;
                     this.icons.username_icon = this.icons.username_active;
@@ -231,6 +233,7 @@
 
             },
             blur(type){
+                //输入框失焦
                 if (type === "username") {
                     this.isFocus.username = false;
                     this.icons.username_icon = this.icons.username_blur;
@@ -254,6 +257,7 @@
                 if (password_value === "" || password_value === null || password_value === undefined){
                     this.errorFlag.password = true;
                 } else {
+                    //切换密码是否可见的状态
                     if(!this.visible){
                         this.visible = true;
                         this.icons.password_icon = this.icons.password_visiable;

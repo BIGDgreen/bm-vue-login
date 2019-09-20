@@ -14,6 +14,11 @@ export default new Router({
       component: login
     },
     {
+      path: '/register',
+      name: 'register',
+      component: () => import('./views/register.vue')
+    },
+    {
       path: '/phoneLogin',
       name: 'phoneLogin',
       // route level code-splitting

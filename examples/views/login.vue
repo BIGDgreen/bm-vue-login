@@ -4,6 +4,7 @@
                   v-on:phoneLogin="to_phoneLogin"
                   v-on:forgetPassword="to_forgetPassword"
                   v-on:toProtocol="to_protocol"
+                  v-on:register="to_register"
                   @parent_login="login">
             <template v-slot:header>
                 <h2>Welcome To Login</h2>
@@ -51,11 +52,16 @@
                     .catch((err) => {
                         console.log(err);
                     })
+            },
+            to_register(){
+                this.$router.push({path:'/register'});
             }
         }
     }
 </script>
 
 <style scoped>
-
+    .login{
+        height: 100vh;
+    }
 </style>

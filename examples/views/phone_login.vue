@@ -28,7 +28,7 @@
             return{
                 countryTel:"",
                 myConfig: {
-                    code_length:'6',
+                    code_length:'4',
                     accountLogin:true,
                     changedPhone: true,
                     protocol: true,

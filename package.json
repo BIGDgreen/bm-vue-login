@@ -1,7 +1,7 @@
 {
   "name": "bm-vlogin",
-  "version": "0.2.0",
-  "description": "基于vue的登录、手机登录和重置密码(包含手机国际区号选择)",
+  "version": "1.0.0",
+  "description": "基于vue的登录注册、手机登录、重置密码(包含手机国际区号选择)",
   "private": false,
   "keywords": ["vue","login","国际区号","登录","手机登录"],
   "files": [

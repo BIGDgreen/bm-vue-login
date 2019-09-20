@@ -14,6 +14,7 @@
         },
         beforeRouteEnter(to,from,next){
             next(vm => {
+                //获取上一个页面的名称
                 vm.lastRouter = from.name;
             })
         },
