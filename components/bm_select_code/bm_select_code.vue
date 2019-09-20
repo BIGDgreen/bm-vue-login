@@ -1654,7 +1654,6 @@
                             that.$set(that.cell_show[i],index,false);
                             that.flag++;
                         }
-
                     });
                     //去除没有相应国家的首字母
                     if (that.filteredCountries[that.letters[i]].length === 0){

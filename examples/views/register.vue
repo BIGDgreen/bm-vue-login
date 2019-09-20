@@ -35,7 +35,7 @@
             //根据配置自行选择需要的方法
             to_forgetPassword(){
                 //进入忘记密码页面
-                this.$router.push({path:'/phoneLogin'});
+                this.$router.push({path:'/phoneLogin'})
             },
             login(input_info){
                 //登录

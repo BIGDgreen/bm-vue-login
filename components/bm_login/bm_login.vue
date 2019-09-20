@@ -189,7 +189,6 @@
                 }
                 //发送请求
                 this.$emit('parent_login',this.input_info);
-                // console.log(this.input_info)
             },
             //设置cookie
             setCookie(c_name, c_pwd, exdays) {
