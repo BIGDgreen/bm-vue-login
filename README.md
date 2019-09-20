@@ -1,9 +1,9 @@
 
-# bm-vlogin
 
+# bm-vlogin
 ## 介绍
 基于vue3的移动端登录组件库。<br>
-包含：普通登录页面、手机登录页面、国际区号选择页面和重置密码页面
+包含：普通登录页面、手机登录注册页面、国际区号选择页面和重置密码页面
 
 ## 特性
 <li>支持组件按需加载</li>
@@ -12,7 +12,7 @@
 <li>区号选择支持字母检索和中英文、首拼、区号搜索</li>
 
 ## 展示
-![在这里插入图片描述](https://img-blog.csdnimg.cn/20190904170240526.gif)
+![在这里插入图片描述](https://img-blog.csdnimg.cn/20190920190755655.gif)
 ## 安装
 ```
 npm install bm-vlogin --save
@@ -479,7 +479,67 @@ script
             }
         }
 ```
-
+注册页面<br>
+用法示例（采用bm_login组件）<br>
+template
+```
+  <div class="register">
+        <bm_login :base-config="myConfig"
+                  v-on:forgetPassword="to_forgetPassword"
+                  v-on:phoneLogin="back_to_login"
+                  @parent_login="login">
+            <!-----------------------可以自定义内容放在header中(以下为示例)--------------------------->
+            <template v-slot:header>
+                <div style="display: flex;flex-direction: column;align-items: flex-start;">
+                    <h2>用户注册</h2>
+                    <h2>账号密码注册</h2>
+                </div>
+            </template>
+        </bm_login>
+    </div>
+```
+script
+```
+ data(){
+            return{
+                myConfig:{
+                    forgetPwd_register_protocol: false,
+                    //为false时，下面三项设置为true无效
+                    rememberPassword:false,
+                    quickLogin:true,
+                    otherLoginWays: false,
+                    login_btn_value:'注册',
+                    phone_login_text:'返回账号密码登录'
+                }
+            }
+        },
+        methods:{
+            //根据配置自行选择需要的方法
+            to_forgetPassword(){
+                //进入忘记密码页面
+                this.$router.push({path:'/phoneLogin'});
+            },
+            login(input_info){
+                //登录
+                console.log(input_info);    //用户输入的用户名和密码
+                let params = new URLSearchParams();
+                params.append('param1',input_info.username);
+                params.append('param2',input_info.password);
+                //其余参数根据需要自行添加
+                this.axios.post('xxx',params)
+                    .then((res) => {
+                        console.log(res);
+                    })
+                    .catch((err) => {
+                        console.log(err);
+                    })
+            },
+            back_to_login(){
+                //返回登录页面
+                this.$router.push({path:'/'});
+            }
+        }
+```
 ### GitHub
 开源地址： [bm_vlogin](https://github.com/BigMonkeyyy/bm-vue-login).
 欢迎star！
@@ -488,4 +548,4 @@ script
 ### 更新日志
 0.1.8：城市区号页面按字母排序，修复字母索引会乱序的bug<br>
 0.2.0：新增重置密码页面,修复跳转页面计时器依然计时的bug
-
+1.0.0：增加注册页面，修复记住我功能的bug
