@@ -1,4 +1,4 @@
-<template>
+<template xmlns:v-slot="http://www.w3.org/1999/XSL/Transform">
     <div class="phone_validate">
         <bm_phone_login   v-on:accountLogin="to_account_login"
                           @parent_choose_area="to_chooseArea"
@@ -60,7 +60,7 @@
             },
             resetPassword(){
                 //跳转到重置密码页面
-                this.$router.push({path:'/phoneValidate/resetPassword'})
+                this.$router.push({path:'/phoneValidate/resetPassword'});
             }
         },
         mounted() {
@@ -68,7 +68,3 @@
         }
     }
 </script>
-
-<style scoped>
-
-</style>
