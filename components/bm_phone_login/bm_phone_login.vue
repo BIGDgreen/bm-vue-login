@@ -15,9 +15,9 @@
             </div>
             <div class="inputItem" :class="{'focus':isFocus.code,'code_empty':errorFlag.code_empty,'code_error':errorFlag.code_err}">
                 <div class="inputContent">
-                    <input id="input_code" @focus="focus('code')" @blur="blur('code')" ref="code" placeholder="请输入验证码" v-model="input_info.code" :maxlength="mConfigs.code_length">
+                    <input id="input_code" @focus="focus('code')" @blur="blur('code')" @keyup="activeLogin()" ref="code" placeholder="请输入验证码" v-model="input_info.code" :maxlength="mConfigs.code_length">
                 </div>
-                <input type="button" value="获取验证码" class="getCodeBtn" @click="getVerifyCode()" ref="getCode" disabled>
+                <input type="button" value="获取验证码" class="getCodeBtn" @click="getVerifyCode()"  ref="getCode" disabled>
             </div>
         </div>
         <div>
@@ -108,7 +108,7 @@
                     changedPhone: true,
                     protocol: true,
                     otherLoginWays: true,
-                    code_length:'4',
+                    code_length:4,
                     login_btn_value:'登录'
                 },this.baseConfig)
             }
@@ -125,12 +125,19 @@
 
         methods:{
             inputPhone(){
+                //输入手机号时，keyup事件
                 let value = this.input_info.phone.replace(/\D/g, '').substr(0, 11); // 不允许输入非数字字符，超过11位数字截取前11位
                 let len = value.length;
                 if (len > 3 && len < 8) {
                     value = value.replace(/^(\d{3})/g, '$1 ')
                 } else if (len >= 8) {
                     value = value.replace(/^(\d{3})(\d{4})/g, '$1 $2 ')
+                    if (len === 11) {
+                        if (!(this.errorFlag.phone_empty || this.errorFlag.phone_err) && this.timeOut) {
+                            //激活获取验证码按钮
+                            this.$refs.getCode.removeAttribute("disabled");
+                        }
+                    }
                 }
                 this.input_info.phone = value;
             },
@@ -175,10 +182,10 @@
                     let code = this.$refs.code.value;
                     this.errorFlag.code_empty = code === "" || code === null || code === undefined;
                 }
-                if (!(this.errorFlag.phone_empty || this.errorFlag.phone_err) && this.timeOut) {
-                    this.$refs.getCode.removeAttribute("disabled");
-                }
-                this.isLoginForbidden = this.errorFlag.phone_empty || this.errorFlag.phone_err || this.errorFlag.code_empty;
+                // if (!(this.errorFlag.phone_empty || this.errorFlag.phone_err) && this.timeOut) {
+                //     //激活获取验证码按钮
+                //     this.$refs.getCode.removeAttribute("disabled");
+                // }
             },
             /**************************************************************获取验证码**************************************************************/
             getVerifyCode(){
@@ -206,6 +213,14 @@
                     },1000)
                 } else {
                     that.errorFlag.phone_empty = true;
+                }
+            },
+            activeLogin(){
+                let code = this.input_info.code;
+                console.log(code.length);
+                if (code.length === this.mConfigs.code_length) {
+                    //激活登录按钮
+                    this.isLoginForbidden = this.errorFlag.phone_empty || this.errorFlag.phone_err || this.errorFlag.code_empty;
                 }
             },
             /***************************************************登录****************************************************/

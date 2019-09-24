@@ -25,7 +25,7 @@
                 countryTel:"",
                 myConfig: {
                     //根据需要自行修改
-                    code_length:'6',
+                    code_length:6,
                     accountLogin:true,
                     changedPhone: false,
                     protocol: false,

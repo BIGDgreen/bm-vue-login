@@ -243,7 +243,7 @@ script
        return{
            countryTel:"",
            myConfig: {
-               code_length:'6',
+               code_length:6,
                accountLogin:true,
                changedPhone: true,
                protocol: true,
@@ -351,7 +351,7 @@ data(){
             countryTel:"",
             myConfig: {
                 //根据需要自行修改
-                code_length:'6',
+                code_length:6,
                 accountLogin:true,
                 changedPhone: false,
                 protocol: false,
