@@ -182,10 +182,6 @@
                     let code = this.$refs.code.value;
                     this.errorFlag.code_empty = code === "" || code === null || code === undefined;
                 }
-                // if (!(this.errorFlag.phone_empty || this.errorFlag.phone_err) && this.timeOut) {
-                //     //激活获取验证码按钮
-                //     this.$refs.getCode.removeAttribute("disabled");
-                // }
             },
             /**************************************************************获取验证码**************************************************************/
             getVerifyCode(){
@@ -217,7 +213,6 @@
             },
             activeLogin(){
                 let code = this.input_info.code;
-                console.log(code.length);
                 if (code.length === this.mConfigs.code_length) {
                     //激活登录按钮
                     this.isLoginForbidden = this.errorFlag.phone_empty || this.errorFlag.phone_err || this.errorFlag.code_empty;
