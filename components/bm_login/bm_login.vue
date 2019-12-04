@@ -30,7 +30,7 @@
         </div>
 
         <div>
-            <button :class="{'opt_button':!isLoginForbidden,'forbidden':isLoginForbidden}" @click="clickLogin()">
+            <button :class="{'opt_button':!isLoginForbidden,'forbidden':isLoginForbidden}" :disabled="isLoginForbidden" @click="clickLogin()">
                 {{mConfigs.login_btn_value}}
             </button>
         </div>

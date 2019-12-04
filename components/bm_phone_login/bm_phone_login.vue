@@ -21,7 +21,7 @@
             </div>
         </div>
         <div>
-            <button :class="{'opt_button':!isLoginForbidden,'forbidden':isLoginForbidden}" @click="login()">
+            <button :class="{'opt_button':!isLoginForbidden,'forbidden':isLoginForbidden}" :disabled="isLoginForbidden" @click="login()">
                 {{mConfigs.login_btn_value}}
             </button>
         </div>
@@ -317,7 +317,7 @@
 
                     #input_code{
                         text-align: center;
-                        letter-spacing: 1rem;
+                        letter-spacing: .6rem;
                         &::placeholder{
                             letter-spacing: .1rem;
                         }
