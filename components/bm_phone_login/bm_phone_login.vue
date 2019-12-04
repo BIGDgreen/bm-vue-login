@@ -17,7 +17,9 @@
                 <div class="inputContent">
                     <input id="input_code" @focus="focus('code')" @blur="blur('code')" @keyup="activeLogin()" ref="code" placeholder="请输入验证码" v-model="input_info.code" :maxlength="mConfigs.code_length">
                 </div>
-                <input type="button" value="获取验证码" class="getCodeBtn" @click="getVerifyCode()"  ref="getCode" :disabled="getCodeDisabled">
+                <div>
+                    <button class="getCodeBtn" @click="getVerifyCode()"  ref="getCode" :disabled="getCodeDisabled">{{getCodeBtnText}}</button>
+                </div>
             </div>
         </div>
         <div>
@@ -87,6 +89,8 @@
                 isLoginForbidden:true,
                 // 获取验证码按钮禁用
                 getCodeDisabled: true,
+                // 获取验证码按钮文字
+                getCodeBtnText: "获取验证码",
                 //解决安卓输入框将fixed布局顶上的问题
                 hideFooter:true,
                 docmHeight: document.documentElement.clientHeight || document.body.clientHeight,
@@ -192,14 +196,18 @@
                     });
                     this.timer = setInterval(()=>{
                         that.countDownTime--;
-                        that.$refs.getCode.value = this.countDownTime + "s后可重新获取";
-                        that.$refs.getCode.setAttribute("disabled","disabled");
+                        that.getCodeBtnText = this.countDownTime + "s后可重新获取";
+                        // that.$refs.getCode.value = this.countDownTime + "s后可重新获取";
+                        that.getCodeDisabled = true;
+                        // that.$refs.getCode.setAttribute("disabled","disabled");
                         if(that.countDownTime <= 0){
                             clearInterval(this.timer);
                             that.countDownTime = 60;
                             that.timeOut = true;
-                            that.$refs.getCode.removeAttribute("disabled");
-                            that.$refs.getCode.value = "获取验证码";
+                            that.getCodeDisabled = false;
+                            // that.$refs.getCode.removeAttribute("disabled");
+                            // that.$refs.getCode.value = "获取验证码";
+                            that.getCodeBtnText = "获取验证码";
                         }
                     },1000)
                 } else {
@@ -321,12 +329,16 @@
                     }
                 }
                 .getCodeBtn{
+                    letter-spacing: 0;
+                    width: 8rem;
+                    font-size: .8rem;
                     background: white;
                     color: @mainColor;
                     border: .5px @mainColor solid;
                     border-radius: 6px;
-                    padding: .3em;
                     outline: none;
+                    margin-bottom: .4rem;
+                    text-indent: 0;
                     &:active{
                         background: #f1f1f1;
                     }
