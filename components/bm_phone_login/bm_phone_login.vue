@@ -17,7 +17,7 @@
                 <div class="inputContent">
                     <input id="input_code" @focus="focus('code')" @blur="blur('code')" @keyup="activeLogin()" ref="code" placeholder="请输入验证码" v-model="input_info.code" :maxlength="mConfigs.code_length">
                 </div>
-                <input type="button" value="获取验证码" class="getCodeBtn" @click="getVerifyCode()"  ref="getCode" disabled>
+                <input type="button" value="获取验证码" class="getCodeBtn" @click="getVerifyCode()"  ref="getCode" :disabled="getCodeDisabled">
             </div>
         </div>
         <div>
@@ -85,6 +85,8 @@
                 },
                 //登录按钮禁用
                 isLoginForbidden:true,
+                // 获取验证码按钮禁用
+                getCodeDisabled: true,
                 //解决安卓输入框将fixed布局顶上的问题
                 hideFooter:true,
                 docmHeight: document.documentElement.clientHeight || document.body.clientHeight,
@@ -128,6 +130,11 @@
                 //输入手机号时，keyup事件
                 let value = this.input_info.phone.replace(/\D/g, '').substr(0, 11); // 不允许输入非数字字符，超过11位数字截取前11位
                 let len = value.length;
+                //判空
+                let phone_num = this.input_info.phone;
+                this.errorFlag.phone_empty = phone_num === "" || phone_num === null || phone_num === undefined;
+                //判断手机号格式是否正确
+                this.errorFlag.phone_err = !(/^1[3456789]\d\s\d{4}\s\d{4}$/.test(phone_num)) && !this.errorFlag.phone_empty;
                 if (len > 3 && len < 8) {
                     value = value.replace(/^(\d{3})/g, '$1 ')
                 } else if (len >= 8) {
@@ -135,8 +142,12 @@
                     if (len === 11) {
                         if (!(this.errorFlag.phone_empty || this.errorFlag.phone_err) && this.timeOut) {
                             //激活获取验证码按钮
-                            this.$refs.getCode.removeAttribute("disabled");
+                            this.getCodeDisabled = false;
+                        } else {
+                            this.getCodeDisabled = true;
                         }
+                    } else {
+                        this.getCodeDisabled = true;
                     }
                 }
                 this.input_info.phone = value;
@@ -154,33 +165,17 @@
                 if (type === "phoneNum"){
                     this.isFocus.phoneNum = true;
                     this.errorFlag.phone_empty = false;
-
                 } if (type === "code"){
                     this.isFocus.code = true;
                     this.errorFlag.code_empty = false;
                 }
-
             },
             blur(type) {
                 if (type === "phoneNum") {
                     this.isFocus.phoneNum = false;
-                    //判空
-                    let phone_num = this.input_info.phone;
-                    this.errorFlag.phone_empty = phone_num === "" || phone_num === null || phone_num === undefined;
-                    //判断手机号格式是否正确
-                    // let intelnational_tel = /^\+((?:9[679]|8[035789]|6[789]|5[90]|42|3[578]|2[1-689])|9[0-58]|8[1246]|6[0-6]|5[1-8]|4[013-9]|3[0-469]|2[70]|7|1)(?:\W*\d){0,13}\d$/;
-                    this.errorFlag.phone_err = !(/^1[3456789]\d\s\d{4}\s\d{4}$/.test(phone_num)) && !this.errorFlag.phone_empty;
-
-                    if (this.errorFlag.phone_empty || this.errorFlag.phone_err){
-                        //如果手机号为空或不合法，则禁用获取验证码按钮
-                        this.$refs.getCode.setAttribute("disabled","disabled");
-                    }
                 }
                 if (type === "code") {
                     this.isFocus.code = false;
-                    //判空
-                    let code = this.$refs.code.value;
-                    this.errorFlag.code_empty = code === "" || code === null || code === undefined;
                 }
             },
             /**************************************************************获取验证码**************************************************************/
@@ -212,8 +207,10 @@
                 }
             },
             activeLogin(){
+                //判空
                 let code = this.input_info.code;
-                if (code.length === this.mConfigs.code_length) {
+                this.errorFlag.code_empty = code === "" || code === null || code === undefined;
+                if (code && code.length === this.mConfigs.code_length) {
                     //激活登录按钮
                     this.isLoginForbidden = this.errorFlag.phone_empty || this.errorFlag.phone_err || this.errorFlag.code_empty;
                 }
