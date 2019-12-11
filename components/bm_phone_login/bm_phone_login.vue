@@ -13,17 +13,17 @@
                     <input type="text" @focus="focus('phoneNum')" @blur="blur('phoneNum')" ref="phoneNum" placeholder="请输入手机号" v-model="input_info.phone" @keyup="inputPhone" maxlength="13" autofocus>
                 </div>
             </div>
-            <div class="inputItem" :class="{'focus':isFocus.code,'code_empty':errorFlag.code_empty,'code_error':errorFlag.code_err}">
-                <div class="inputContent">
+            <div class="inputItem codeInput" :class="{'focus':isFocus.code,'code_empty':errorFlag.code_empty,'code_error':errorFlag.code_err}">
+                <div class="inputContent ">
                     <input id="input_code" @focus="focus('code')" @blur="blur('code')" @keyup="activeLogin()" ref="code" placeholder="请输入验证码" v-model="input_info.code" :maxlength="mConfigs.code_length">
                 </div>
-                <div>
-                    <button class="getCodeBtn" @click="getVerifyCode()"  ref="getCode" :disabled="getCodeDisabled">{{getCodeBtnText}}</button>
+                <div class="getCodeBtn">
+                    <button @click="getVerifyCode()" ref="getCode" :disabled="getCodeDisabled">{{getCodeBtnText}}</button>
                 </div>
             </div>
         </div>
         <div>
-            <button :class="{'opt_button':!isLoginForbidden,'forbidden':isLoginForbidden}" :disabled="isLoginForbidden" @click="login()">
+            <button :class="{'opt_button':!isLoginForbidden,'forbidden':isLoginForbidden}" class="loginBtn" :disabled="isLoginForbidden" @click="login()">
                 {{mConfigs.login_btn_value}}
             </button>
         </div>
@@ -196,10 +196,9 @@
                     });
                     this.timer = setInterval(()=>{
                         that.countDownTime--;
-                        that.getCodeBtnText = this.countDownTime + "s后可重新获取";
-                        // that.$refs.getCode.value = this.countDownTime + "s后可重新获取";
+                        // that.getCodeBtnText = this.countDownTime + "s后重新获取";
+                        that.getCodeBtnText = this.countDownTime + "秒";
                         that.getCodeDisabled = true;
-                        // that.$refs.getCode.setAttribute("disabled","disabled");
                         if(that.countDownTime <= 0){
                             clearInterval(this.timer);
                             that.countDownTime = 60;
@@ -297,7 +296,6 @@
                     transform: scaleY(.5);
                     background: #bfbfbf;
                 }
-
                 .chooseArea{
                     display: flex;
                     align-items: center;
@@ -319,7 +317,6 @@
                             color: #aaaaaa;
                         }
                     }
-
                     #input_code{
                         text-align: center;
                         letter-spacing: .6rem;
@@ -329,26 +326,29 @@
                     }
                 }
                 .getCodeBtn{
-                    letter-spacing: 0;
-                    width: 8rem;
-                    font-size: .8rem;
-                    background: white;
-                    color: @mainColor;
-                    border: .5px @mainColor solid;
-                    border-radius: 6px;
-                    outline: none;
-                    margin-bottom: .4rem;
-                    text-indent: 0;
-                    &:active{
-                        background: #f1f1f1;
-                    }
-                    &:disabled{
-                        background: tint(@mainColor,90%);
-                        color: fade(@mainColor,40%);
-                        border: #f2f2f2;
+                    button {
+                        letter-spacing: 0;
+                        font-size: .72rem;
+                        background: white;
+                        color: @mainColor;
+                        border: .5px @mainColor solid;
+                        border-radius: 6px;
+                        margin-bottom: .4rem;
+                        text-indent: 0;
+                        &:active{
+                            background: #f1f1f1;
+                        }
+                        &:disabled{
+                            background: tint(@mainColor,90%);
+                            color: fade(@mainColor,40%);
+                            border: #f2f2f2;
+                        }
                     }
                 }
             }
+            /*.codeInput{*/
+            /*    display: inline;*/
+            /*}*/
             .focus::after{
                 background: @mainColor;
             }
@@ -374,7 +374,6 @@
             .gradient;
             border: none;
             outline: none;
-            width: 100%;
             position: relative;
             color: white;
             border-radius: 1.2rem;
@@ -387,8 +386,12 @@
             text-indent: .6rem;
             text-align: center;
         }
+        .loginBtn {
+            width: 100%;
+        }
         //账号密码登录
         .accountLogin{
+            width: 100%;
             letter-spacing: .1rem;
             background: white;
             border: .8px solid @mainColor;

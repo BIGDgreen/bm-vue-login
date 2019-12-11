@@ -294,7 +294,7 @@ script
 
 template
 ```
-    <bm_selectArea v-on:choose="selectCountry($event)"></bm_selectArea>
+    <bm_select_code v-on:choose="selectCountry($event)"></bm_select_code>
 ```
 script
 
