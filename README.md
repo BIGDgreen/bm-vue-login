@@ -72,7 +72,6 @@ Vue.use(bm_select_code);
              forgetPassword:true,<br>
              register:true,<br>
              protocol:true,<br>
-             autoLogin:true,<br>
              quickLogin:true,<br>
              otherLoginWays: true<br>
      </td>

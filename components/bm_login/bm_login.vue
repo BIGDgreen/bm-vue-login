@@ -19,12 +19,12 @@
         </div>
 
         <div class="auto_quickLogin">
-            <!-- <div v-if="mConfigs.rememberPassword" class="autoLogin_wrapper">
+            <div v-if="mConfigs.rememberPassword" class="autoLogin_wrapper">
                 <input type="checkbox" id="radio" hidden v-model="checked" @click="isChecked()">
                 <label for="radio" class="autoLogin"></label>
                 <span>记住密码</span>
-            </div> -->
-            <div v-if="mConfigs.quickLogin" class="quickLogin" @click="$emit('phoneLogin')">
+            </div>
+            <div v-if="mConfigs.rememberPassword && mConfigs.quickLogin" class="quickLogin" @click="$emit('phoneLogin')">
                 手机快捷登录
             </div>
         </div>
@@ -168,13 +168,14 @@
             }
         },
         methods:{
-            // isChecked(){
-            //     this.checked = !this.checked;
-            //     if (document.cookie.indexOf("userName") > -1 && document.cookie.indexOf("userPwd") > -1 && !this.checked){
-            //         this.clearCookie();
-            //         this.input_info.password = "";
-            //     }
-            // },
+            isChecked(){
+                this.checked = !this.checked;
+                this.$emit('parent_rememberMe', this.checked);
+                // if (document.cookie.indexOf("userName") > -1 && document.cookie.indexOf("userPwd") > -1 && !this.checked){
+                //     this.clearCookie();
+                //     this.input_info.password = "";
+                // }
+            },
             clickLogin(){
                 // let that = this;
                 // if (that.checked === true){
