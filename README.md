@@ -72,6 +72,7 @@ Vue.use(bm_select_code);
              forgetPassword:true,<br>
              register:true,<br>
              protocol:true,<br>
+             rememberPassword:true,<br>
              quickLogin:true,<br>
              otherLoginWays: true<br>
      </td>
@@ -96,7 +97,7 @@ Vue.use(bm_select_code);
 使用示例
 
 template
-```
+```html
  <bm_login :base-config="myConfig"
            v-on:phoneLogin="to_phoneLogin"
            v-on:forgetPassword="to_forgetPassword"
@@ -105,6 +106,7 @@ template
            v-on:qqLogin="qq_login"
            v-on:weixinLogin="weixin_login"
            v-on:weiboLogin="weibo_login"
+           @parent_rememberMe="rememberMe"
            @parent_login="login">
       <!-----------------------可以自定义内容放在header中(以下为示例)--------------------------->
        <template v-slot:header>
@@ -115,7 +117,7 @@ template
  </bm_login>
 ```
 script
-```
+```js
     data(){
         return{
             myConfig:{
@@ -152,6 +154,13 @@ script
         },
         weibo_login(){
             //微博登录
+        },
+        /**
+            * 记住我功能
+            * 关闭掉了客户端的cookie实现，请开发者自行与服务端通信实现该功能
+            */
+        rememberMe(isActive) {
+            console.log("rememberMe:::", isActive);  // 该功能是否开启
         },
         login(input_info){
             //登录
@@ -198,7 +207,7 @@ script
 
 使用示例
 template
-```
+```html
   <bm_phone_login  v-on:accountLogin="to_account_login"
                    v-on:changedPhone="to_change_phone"
                    v-on:qq_login="qqLogin"
@@ -220,7 +229,7 @@ template
 ```
 
 script
-```
+```js
     data(){
         return{
             countryTel:"",
@@ -290,12 +299,12 @@ script
 用法示例
 
 template
-```
+```html
     <bm_select_code v-on:choose="selectCountry($event)"></bm_select_code>
 ```
 script
 
-```
+```js
     methods:{
         selectCountry(event){
             let country_tel = event.tel;
