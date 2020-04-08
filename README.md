@@ -7,7 +7,6 @@
 ## 特性
 <li>支持组件按需加载</li>
 <li>可以在组件配置中自行选择需要的元素</li>
-<li>登录支持七天内记住用户功能</li>
 <li>区号选择支持字母检索和中英文、首拼、区号搜索</li>
 
 ## 展示
@@ -126,7 +125,6 @@ script
                 forgetPassword:true,
                 register:true,
                 protocol:true,
-                rememberPassword:true,
                 quickLogin:true,
                 otherLoginWays: true
             }

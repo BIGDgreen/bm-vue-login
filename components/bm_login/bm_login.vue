@@ -19,16 +19,15 @@
         </div>
 
         <div class="auto_quickLogin">
-            <div v-if="mConfigs.rememberPassword" class="autoLogin_wrapper">
+            <!-- <div v-if="mConfigs.rememberPassword" class="autoLogin_wrapper">
                 <input type="checkbox" id="radio" hidden v-model="checked" @click="isChecked()">
                 <label for="radio" class="autoLogin"></label>
                 <span>记住密码</span>
-            </div>
-            <div v-if="mConfigs.rememberPassword && mConfigs.quickLogin" class="quickLogin" @click="$emit('phoneLogin')">
+            </div> -->
+            <div v-if="mConfigs.quickLogin" class="quickLogin" @click="$emit('phoneLogin')">
                 手机快捷登录
             </div>
         </div>
-
         <div>
             <button :class="{'opt_button':!isLoginForbidden,'forbidden':isLoginForbidden}" :disabled="isLoginForbidden" @click="clickLogin()">
                 {{mConfigs.login_btn_value}}
@@ -134,7 +133,7 @@
                     forgetPassword:true,
                     register:true,
                     protocol:true,
-                    rememberPassword:true,
+                    // rememberPassword:true,
                     quickLogin:true,
                     otherLoginWays: true,
                     login_btn_value:'登录',
@@ -155,12 +154,12 @@
         },
 
         mounted() {
-            if (this.mConfigs.rememberPassword) {  //如果用户选择了记住密码功能
-                //获取cookie值
-                this.getCookie();
-                //获取用户上一次的选择
-                this.checked = sessionStorage.getItem('isChecked') === "true";
-            }
+            // if (this.mConfigs.rememberPassword) {  //如果用户选择了记住密码功能
+            //     //获取cookie值
+            //     this.getCookie();
+            //     //获取用户上一次的选择
+            //     this.checked = sessionStorage.getItem('isChecked') === "true";
+            // }
             //监听事件
             window.onresize = ()=>{
                 return(()=>{
@@ -169,55 +168,55 @@
             }
         },
         methods:{
-            isChecked(){
-                this.checked = !this.checked;
-                if (document.cookie.indexOf("userName") > -1 && document.cookie.indexOf("userPwd") > -1 && !this.checked){
-                    this.clearCookie();
-                    this.input_info.password = "";
-                }
-            },
+            // isChecked(){
+            //     this.checked = !this.checked;
+            //     if (document.cookie.indexOf("userName") > -1 && document.cookie.indexOf("userPwd") > -1 && !this.checked){
+            //         this.clearCookie();
+            //         this.input_info.password = "";
+            //     }
+            // },
             clickLogin(){
-                let that = this;
-                if (that.checked === true){
-                    //保存七天
-                    that.setCookie(that.input_info.username,that.input_info.password,7);
-                    //保存用户此次选择
-                    sessionStorage.setItem('isChecked',"true");
-                } else{
-                    that.clearCookie();
-                    sessionStorage.setItem('isChecked',"false");
-                }
+                // let that = this;
+                // if (that.checked === true){
+                //     //保存七天
+                //     that.setCookie(that.input_info.username,that.input_info.password,7);
+                //     //保存用户此次选择
+                //     sessionStorage.setItem('isChecked',"true");
+                // } else{
+                //     that.clearCookie();
+                //     sessionStorage.setItem('isChecked',"false");
+                // }
                 //发送请求
                 this.$emit('parent_login',this.input_info);
             },
             //设置cookie
-            setCookie(c_name, c_pwd, exdays) {
-                let exdate = new Date(); //获取时间
-                exdate.setTime(exdate.getTime() + 24 * 60 * 60 * 1000 * exdays); //保存的天数
-                //字符串拼接cookie
-                window.document.cookie = "userName" + "=" + c_name + ";path=/;expires=" + exdate.toGMTString();
-                window.document.cookie = "userPwd" + "=" + c_pwd + ";path=/;expires=" + exdate.toGMTString();
-            },
+            // setCookie(c_name, c_pwd, exdays) {
+            //     let exdate = new Date(); //获取时间
+            //     exdate.setTime(exdate.getTime() + 24 * 60 * 60 * 1000 * exdays); //保存的天数
+            //     //字符串拼接cookie
+            //     window.document.cookie = "userName" + "=" + c_name + ";path=/;expires=" + exdate.toGMTString();
+            //     window.document.cookie = "userPwd" + "=" + c_pwd + ";path=/;expires=" + exdate.toGMTString();
+            // },
             //读取cookie
-            getCookie: function() {
-                if (document.cookie.length > 0) {
-                    let arr = document.cookie.split('; '); //这里显示的格式需要切割一下自己可输出看下
-                    // console.log(arr);
-                    for (let i = 0; i < arr.length; i++) {
-                        let arr2 = arr[i].split('='); //再次切割
-                        //判断查找相对应的值
-                        if (arr2[0] === 'userName') {
-                            this.input_info.username = arr2[1]; //保存到保存数据的地方
-                        } else if (arr2[0] === 'userPwd') {
-                            this.input_info.password = arr2[1];
-                        }
-                    }
-                }
-            },
+            // getCookie: function() {
+            //     if (document.cookie.length > 0) {
+            //         let arr = document.cookie.split('; '); //这里显示的格式需要切割一下自己可输出看下
+            //         // console.log(arr);
+            //         for (let i = 0; i < arr.length; i++) {
+            //             let arr2 = arr[i].split('='); //再次切割
+            //             //判断查找相对应的值
+            //             if (arr2[0] === 'userName') {
+            //                 this.input_info.username = arr2[1]; //保存到保存数据的地方
+            //             } else if (arr2[0] === 'userPwd') {
+            //                 this.input_info.password = arr2[1];
+            //             }
+            //         }
+            //     }
+            // },
             //清除cookie
-            clearCookie: function() {
-                this.setCookie("", "", -1); //修改2值都为空，天数为负1天
-            },
+            // clearCookie: function() {
+            //     this.setCookie("", "", -1); //修改2值都为空，天数为负1天
+            // },
             focus(type){
                 //聚焦输入框
                 if (type === "username"){

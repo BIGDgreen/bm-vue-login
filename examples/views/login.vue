@@ -24,7 +24,7 @@
                     forgetPassword:true,
                     register:true,
                     protocol:true,
-                    rememberPassword:true,
+                    // rememberPassword:true,
                     quickLogin:true,
                     otherLoginWays: true
                 }
