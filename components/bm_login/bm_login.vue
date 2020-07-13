@@ -7,7 +7,7 @@
             <div class="inputItem" :class="{'focus':isFocus.username,'username_error':errorFlag.username}">
                 <img :src=icons.username_icon alt="" class="icon">
                 <div class="inputContent">
-                    <input type="text" @focus="focus('username')" @blur="blur('username')" ref="username" placeholder="请输入用户名" v-model="input_info.username" autofocus>
+                    <input type="text" @focus="focus('username')" @blur="blur('username')" @input="inputUsername" ref="username" placeholder="请输入用户名" v-model="input_info.username" autofocus>
                 </div>
             </div>
             <div class="inputItem" :class="{'focus':isFocus.password,'password_error':errorFlag.password}">
@@ -168,6 +168,9 @@
             }
         },
         methods:{
+            inputUsername(e) {
+                console.log(e);
+            },
             isChecked(){
                 this.checked = !this.checked;
                 this.$emit('parent_rememberMe', this.checked);
